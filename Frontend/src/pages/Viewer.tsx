@@ -43,14 +43,16 @@ export default function Viewer() {
     return path.floors[floorIndex] ?? null;
   }, [building, path, floorIndex]);
 
-  // تحويل جميع نقاط المسار في كل الطوابق إلى قائمة نقطية متسلسلة لحساب الإرشادات
+  // تحويل جميع نقاط المسار في كل الطوابق مع إضافة _id لتوافق NodeDraft[]
+ // تحويل جميع نقاط المسار في كل الطوابق مع ضمان توافق الأنواع تماماً مع NodeDraft[]
   const fullPathNodes = useMemo(() => {
     if (!path?.reachable) return [];
     return path.floors.flatMap((f) =>
       f.points.map((p) => ({
+        _id: p.nodeId,
         x: p.x,
         y: p.y,
-        name: p.name,
+        name: p.name || "", // حل مشكلة الـ undefined بجعلها string فارغة لو لم تتوفر
         floorId: f.floorId,
       }))
     );

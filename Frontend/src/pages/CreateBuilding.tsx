@@ -145,7 +145,7 @@ export default function CreateBuilding() {
   // توليد إرشادات الملاحة أثناء محاكاة المسار
   const simNavSteps = useMemo(() => {
     if (!simulatedPathIds.length) return [];
-    const pathNodes = simulatedPathIds
+    const pathNodes: NodeDraft[] = simulatedPathIds
       .map((id) => nodes.find((n) => n._id === id))
       .filter((n): n is NodeDraft => !!n);
     return generateNavigationSteps(pathNodes);
